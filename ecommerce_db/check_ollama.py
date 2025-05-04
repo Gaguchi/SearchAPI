@@ -3,7 +3,7 @@ import json
 import sys
 
 def check_ollama_status():
-    """Check if Ollama is running and Gemma 3 model is available"""
+    """Check if Ollama is running and DeepSeek model is available"""
     print("Checking Ollama status...")
     
     try:
@@ -17,16 +17,16 @@ def check_ollama_status():
         for model in models:
             print(f"- {model['name']}")
         
-        # Check if Gemma 3 is available (check both "gemma:3" and "gemma3:latest")
-        gemma3_available = any(("gemma:3" in model.get("name", "") or "gemma3" in model.get("name", "")) for model in models)
+        # Check if DeepSeek is available
+        deepseek_available = any("deepseek" in model.get("name", "").lower() for model in models)
         
-        if not gemma3_available:
-            print("\nGemma 3 model not found. You need to pull it with:")
-            print("ollama pull gemma:3")
+        if not deepseek_available:
+            print("\nDeepSeek model not found. You need to pull it with:")
+            print("ollama pull deepseek-r1:1.5b")
         else:
-            print("\nGemma 3 model is available and ready to use.")
+            print("\nDeepSeek model is available and ready to use.")
         
-        return gemma3_available
+        return deepseek_available
         
     except requests.exceptions.ConnectionError:
         print("Error: Cannot connect to Ollama server.")
@@ -38,7 +38,7 @@ def check_ollama_status():
 
 if __name__ == "__main__":
     if check_ollama_status():
-        print("\nSystem is ready for AI product search with Gemma 3.")
+        print("\nSystem is ready for AI product search with DeepSeek model.")
     else:
-        print("\nPlease ensure Ollama is running and Gemma 3 model is installed.")
+        print("\nPlease ensure Ollama is running and DeepSeek model is installed.")
         sys.exit(1)

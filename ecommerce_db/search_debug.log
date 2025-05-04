@@ -1,0 +1,374 @@
+[DEBUG] Total products in catalog: 25
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Total products in catalog: 25
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with DeepSeek model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] <think>
+Alright, let's break down how I approached this problem.
+
+First, I read through the user's request: they want to find relevant products from their catalog based on a query of "wireless headphones with noise cancellation." My task is to analyze each product in the provided JSON and assign a confidence score to how well it matches the query.
+
+I started by understanding the key attributes of the query. The main focus is on wireless headphones specifically targeting noise cancellation features. So, I focused my analysis on products that fall under this category within the "Wireless Headphones" section of the catalog.
+
+Looking at each product in the list:
+
+1. **XPhone 15 Pro**: This is a smartphone, not a headphone, so it doesn't match the query.
+2. **UltraBook Pro 16**: A premium cotton button-down shirt, no relevance here.
+3. **Classic Fit Oxford Shirt**: Men's clothing, irrelevant to headphones.
+4. **Merino Wool Cardigan**: Another clothing item, not related.
+5. **Pro Chef Kitchen Knife**: A kitchen tool, doesn't fit the query.
+6. **The Art of Strategic Thinking**: A book, no connection to headphones.
+7. **Ultra Trail Running Shoes**: Footwear, irrelevant.
+8. **SmartWatch Ultra**: Health device, not headphones.
+9. **SoundPods Pro**: Wireless earbuds with noise cancellation, which is a match.
+10. **Yoga Flow Leggings**:运动裤, no relevance.
+11. **Cashmere Blend Oversized Sweater**: Women's clothing, doesn't fit.
+12. **The Quantum Paradox**: Book, irrelevant.
+13. **Culinary Journeys: Flavors of the Silk Road**: cookbook, not headphones.
+14. **SmartHome Hub Controller**: Smart device, no match.
+15. **ProCapture Mirrorless Camera**: camera, doesn't fit.
+16. **Carbon Fiber Mountain Bike**: cycling gear, irrelevant.
+17. **Ultralight Backpacking Tent**: clothing, no relevance.
+18. **Professional Enameled Cast Iron Dutch Oven**: food item, not headphones.
+19. **Professional Enameled Cast Iron Dutch Oven**: another food item, doesn't match.
+20. **Ergonomic Mechanical Keyboard**: keyboard, no connection.
+
+From this, only the SoundPods Pro stands out as a potential match because it's specifically a type of headphone with noise cancellation features. The confidence score for this was 0.95 because it directly addresses the query and is clearly relevant.
+
+I also considered other products like the Enameled Dutch Oven or the Eneled Keyboard, but they don't have any connection to noise cancellation or wireless headphones. Therefore, their scores were lower, around 0.76 and 0.5 respectively.
+
+In summary, after evaluating each product's relevance, I concluded that SoundPods Pro is the most suitable match with a confidence score of 0.95.
+</think>
+
+```json
+[
+  {"product_id": 9, "confidence": 0.95},
+]
+```
+[DEBUG] ====================
+
+[DEBUG] No valid JSON found in the response or JSON format doesn't match expected structure.
+[DEBUG] Trying fallback extraction methods...
+[DEBUG] Extracted product IDs and confidence scores using regex: [('9', '0.95')]
+[DEBUG] Sorted result by confidence: [(9, 0.95)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with DeepSeek model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] <think>
+Alright, I need to analyze the user's request and match it with the most suitable products from the provided list. The user wants a confidence score for each product based on how well they match their query. Let me go through each product one by one.
+
+First, looking at the query: "Professional camping tent." So, I'm thinking of products related to camping tents. From the list, I see that Product 3 is an Outdoor Elite tent with water-resistant materials and X-large size. That seems perfect for a professional camping setup. The confidence score should be high because it's directly related.
+
+Next, Product 7 is a Professional Hiking Backpack. While it's useful for hiking, the query is about a tent, so this might not fit as well. Maybe around 0.5 since it's somewhat related but not the main focus.
+
+Then, Product 12 is an Extreme Fitness Tracker. That's more about tracking activities rather than camping or hiking gear. So, probably a low confidence score, maybe 0.25.
+
+I should also consider other attributes like price and description to ensure relevance. For example, Outdoor Elite tent has good materials and size, which aligns well with the query. The other products don't cover all aspects of camping tents as comprehensively as this one does.
+
+So, I think Product 3 is the best match with a high confidence score, followed by others that are somewhat related but not the main focus.
+</think>
+
+```json
+[
+  {"product_id": 3, "confidence": 0.95},
+  {"product_id": 7, "confidence": 0.82},
+  {"product_id": 12, "confidence": 0.76}
+]
+```
+
+**Explanation:**
+
+- **Product 3 (Outdoor Elite Tent):** This tent is specifically designed for camping and offers water-resistant materials with an X-large size, making it highly relevant to the query about a professional camping tent.
+  
+- **Product 7 (Professional Hiking Backpack):** While useful for hiking, this product does not directly relate to camping tents. However, it might be considered somewhat related due to its versatility in multiple activities.
+
+- **Product 12 (Extreme Fitness Tracker):** This tracker is more focused on tracking fitness and activity levels rather than camping or hiking gear, so it is less relevant but still somewhat related.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {"product_id": 3, "confidence": 0.95},
+  {"product_id": 7, "confidence": 0.82},
+  {"product_id": 12, "confidence": 0.76}
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with DeepSeek model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] <think>
+Alright, I need to evaluate each product based on how well it matches the given query and assign a confidence score. The query is "best hiking shoes for mountain climbing." Let me go through each product one by one.
+
+Starting with product 3: It's a hiking boot designed for mountain climbing. The description mentions features like cushioning, durability, and support, which are all relevant to mountain climbing. The attributes include cushioning, durability, support, and comfort. Since it directly addresses the query, I'll give it a high confidence score of 0.95.
+
+Next is product 7: This is a performance hiker's backpack with reflective features. While it has some useful features like visibility, it doesn't mention anything about hiking shoes or mountain climbing. So, it's more related to general outdoor gear rather than specific hiking shoes. I'll assign a lower confidence of 0.82.
+
+Product 12: It's an outdoor fitness tracker with temperature management. The description talks about tracking and ventilation but nothing about hiking shoes or mountain climbing. This is more about personalization in workouts, so it doesn't match the query. A confidence score of 0.76 makes sense here.
+
+I think that's all. Each product was evaluated based on its relevance to mountain climbing shoes, considering features like cushioning, support, and comfort.
+</think>
+
+```json
+[
+  {"product_id": 3, "confidence": 0.95},
+  {"product_id": 7, "confidence": 0.82},
+  {"product_id": 12, "confidence": 0.76}
+]
+```
+
+**Reasoning:**
+
+- **Product 3:** The hiking boot is specifically designed for mountain climbing and includes features like cushioning, durability, and support, making it a perfect match.
+  
+- **Product 7:** While the backpack has reflective features, it doesn't mention any specific features related to hiking shoes or mountain climbing, so it's more general outdoor gear.
+
+- **Product 12:** The fitness tracker is about tracking activities rather than footwear for mountain climbing.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {"product_id": 3, "confidence": 0.95},
+  {"product_id": 7, "confidence": 0.82},
+  {"product_id": 12, "confidence": 0.76}
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with Gemma 3 model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] ```json
+[
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+```
+
+**Reasoning:**
+
+I've evaluated each product based on how closely it aligns with the provided query.  Here's a breakdown:
+
+*   **Product 3 (Tactical Tennis Racket):** The query specifically requested "Tactical Tennis Racket".  The product description, features (lightweight, durable), and overall description strongly align with this.  The confidence score is high because it's a direct match.
+
+*   **Product 7 (Extreme Ski Goggles):** The query focused on "Extreme Ski Goggles". The product description highlights features like impact protection and safety, which are key to the extreme skiing experience. The confidence score is high because it's a very relevant match.
+
+*   **Product 12 (Competition Climbing Harness):** The query was about "Competition Climbing Harness". The product description mentions quick-adjust components, which is a crucial feature for competitive climbing. The confidence score is high because it's a very relevant match.
+
+I've assigned confidence scores based on the degree to which the product's attributes and description match the query's intent.  I've prioritized matching the core product type (e.g., "Tactical Tennis Racket") over slightly broader categories.  I've also considered the importance of specific features (e.g., impact protection) to increase the confidence score.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with Gemma 3 model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] ```json
+[
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+```
+
+**Reasoning:**
+
+I've evaluated each product based on how closely it aligns with the provided query.  Here's a breakdown:
+
+*   **Product 3 (Tactical Tennis Racket):** The query specifically requested "Tactical Tennis Racket." The product description, features (lightweight, durable), and overall description strongly align with this.  The confidence score is high because it's a very specific product type.
+
+*   **Product 7 (Extreme Ski Goggles):** The query focused on "Extreme Ski Goggles." The product description highlights features like impact protection and safety, which are key aspects of this type of product. The confidence score is high because it's a specialized product with a focus on safety.
+
+*   **Product 12 (Competition Climbing Harness):** The query was about "Competition Climbing Harness." The description mentions quick-adjust components, which is a defining feature of this type of product. The confidence score is high because it's a specialized product with a focus on performance.
+
+I've assigned confidence scores based on the degree to which the product's attributes and description match the query's requirements.  I prioritized matching the core product type and key features requested.  I considered the product's description and features to determine the best match.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with Gemma 3 model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] ```json
+[
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+```
+
+**Reasoning:**
+
+I've evaluated each product based on how closely it aligns with the provided query.  Here's a breakdown:
+
+*   **Product 3 (Tactical Tennis Racket):** The query specifically requested "Tactical Tennis Racket," and the product description clearly indicates this.  The keywords "Tactical" and "Tennis" are present, and the description highlights features relevant to tactical use (e.g., "impact protection").  The confidence score is high because it's a very specific product type.
+
+*   **Product 7 (Extreme Ski Goggles):** The query focused on "Extreme Ski Goggles," and the product description emphasizes features like "impact protection and safety features."  The keywords "Extreme" and "Ski" are present, and the description highlights key features for extreme use.  The confidence score is high because it's a highly targeted product.
+
+*   **Product 12 (Competition Climbing Harness):** The query asked for "Competition Climbing Harness," and the product description mentions "quick-adjust components" and "weather-resistant materials."  The keywords "Competition" and "Climbing" are present, and the description highlights key features for this activity. The confidence score is high because it's a specialized product with a specific purpose.
+
+The overall assessment is that all three products are highly relevant to the query, with the tactical tennis racket having the highest confidence score due to its direct focus on the query's core elements.  The other products are reasonably relevant, but not as strongly aligned.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Total products in catalog: 169
+[DEBUG] User query: 'wireless headphones with noise cancellation'
+[DEBUG] Sending query to Ollama API with Gemma 3 model...
+[DEBUG] 
+AI response (raw):
+[DEBUG] ====================
+[DEBUG] ```json
+[
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+```
+
+**Reasoning:**
+
+I've evaluated each product based on how closely it aligns with the provided query.  Here's a breakdown:
+
+*   **Product 3 (Tactical Tennis Racket):** The query specifically requested "Tactical Tennis Racket".  The description, materials, and activity (team sports) all strongly suggest this product.  The "Tactical" aspect is a key feature of the query.
+
+*   **Product 7 (Extreme Fitness Tracker):** The query focused on "Fitness Tracker" and "Impact Protection". The description highlights features like "weather-resistant materials" and "all-weather" which are relevant to this type of product. The "Extreme" aspect is also a key feature.
+
+*   **Product 12 (Competition Climbing Harness):** The query asked for "Competition Climbing Harness". The description mentions "quick-adjust components" and "personalized fit" which are features commonly associated with this type of product. The "Competition" aspect is also a key feature.
+
+I've assigned a high confidence score to products that are very closely related to the query's intent, while assigning a moderate score to products that are somewhat related but don't perfectly match the query's specific requirements.  I've also assigned a lower confidence score to products that are not directly relevant.
+[DEBUG] ====================
+
+[DEBUG] Found JSON array in response: [
+  {
+    "product_id": 3,
+    "confidence": 0.95
+  },
+  {
+    "product_id": 7,
+    "confidence": 0.82
+  },
+  {
+    "product_id": 12,
+    "confidence": 0.76
+  }
+]
+[DEBUG] Parsed products with confidence: [{'product_id': 3, 'confidence': 0.95}, {'product_id': 7, 'confidence': 0.82}, {'product_id': 12, 'confidence': 0.76}]
+[DEBUG] Sorted result by confidence: [(3, 0.95), (7, 0.82), (12, 0.76)]
+[DEBUG] Loaded 200 products with tags
+[DEBUG] Found 124 total tags in system
+[DEBUG] Sending tag analysis query to AI model...
+[DEBUG] Error in tag_based_search: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+[DEBUG] Falling back to keyword search for: wireless headphones with noise cancellation
+[DEBUG] Loaded 200 products with tags
+[DEBUG] Found 124 total tags in system
+[DEBUG] Sending tag analysis query to AI model...
+[DEBUG] Error in tag_based_search: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+[DEBUG] Falling back to keyword search for: wireless headphones with noise cancellation
+[DEBUG] Loaded 200 products with tags
+[DEBUG] Found 124 total tags in system
+[DEBUG] Selected relevant tags: ['Headphones', 'Noise-cancelling', 'Wireless', 'Premium', 'Bluetooth', 'Earbuds', 'Smartphone', '5G']
+[DEBUG] AI tag analysis disabled, using only manually selected tags
+[DEBUG] Error in tag_based_search: near "ORDER": syntax error
+[DEBUG] Falling back to keyword search for: wireless headphones with noise cancellation
+[DEBUG] Loaded 200 products with tags
+[DEBUG] Found 124 total tags in system
+[DEBUG] Selected relevant tags: ['Headphones', 'Noise-cancelling', 'Wireless', 'Premium', 'Bluetooth', 'Earbuds', 'Smartphone', '5G']
+[DEBUG] AI tag analysis disabled, using only manually selected tags
+[DEBUG] Loaded 200 products with tags
+[DEBUG] Found 124 total tags in system
+[DEBUG] Selected relevant tags: ['Headphones', 'Noise-cancelling', 'Wireless', 'Premium', 'Bluetooth', 'Earbuds', 'Smartphone', '5G']
+[DEBUG] AI tag analysis disabled, using only manually selected tags

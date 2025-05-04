@@ -7,7 +7,7 @@ import random
 DB_FILE = 'ecommerce.db'
 
 def add_more_products():
-    """Add 25 more products to the existing e-commerce database"""
+    """Add 200+ more products to the existing e-commerce database"""
     # Connect to the existing database
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
@@ -24,247 +24,659 @@ def add_more_products():
     conn.commit()
     conn.close()
     
-    print(f"Successfully added 25 more products to database '{DB_FILE}'.")
+    print(f"Successfully added 200+ more products to database '{DB_FILE}'.")
 
 def insert_additional_products(conn, start_id):
-    """Insert 25 more products and their related data into the database"""
+    """Insert 200+ products and their related data into the database"""
     cursor = conn.cursor()
     
-    # Additional products to add
-    products = [
-        # Electronics - Smart Watches
-        (None, "SmartWatch Ultra", "SW-ULTRA-V1", 
-         "The SmartWatch Ultra features a stunning 2.0-inch AMOLED display with always-on capability and 1000 nits of brightness. Track your health with advanced sensors including ECG, blood oxygen, and continuous heart rate monitoring. With built-in GPS, 50m water resistance, and 7-day battery life, it's the perfect companion for fitness enthusiasts. The watch supports over 100 workout modes and automatically detects common exercises. Notifications, calls, and app alerts are seamlessly delivered to your wrist, while the voice assistant allows hands-free control. Crafted from premium materials including sapphire crystal and titanium, it offers both durability and style.",
-         "Premium smartwatch with health tracking and 7-day battery life.", 
-         349.99, 299.99, 150.00, 100, 1, "TechWear", 0.18, 
-         json.dumps({"length": 1.77, "width": 1.49, "height": 0.42}), 1, 1),
-        
-        # Electronics - Wireless Earbuds
-        (None, "SoundPods Pro", "SP-PRO-V2", 
-         "SoundPods Pro wireless earbuds deliver an immersive audio experience with custom-designed dynamic drivers and active noise cancellation that adapts to your environment. The transparency mode lets you hear your surroundings when needed, while the spatial audio feature creates a three-dimensional listening experience. With 8 hours of listening time per charge and an additional 24 hours from the charging case, you won't have to worry about battery life. The earbuds are sweat and water-resistant, making them perfect for workouts. Voice calls are crystal clear thanks to beamforming microphones that focus on your voice and block out background noise.",
-         "Premium wireless earbuds with adaptive noise cancellation and spatial audio.", 
-         199.99, 179.99, 80.00, 150, 4, "AudioTech", 0.12, 
-         json.dumps({"length": 2.1, "width": 1.8, "height": 0.9}), 0, 1),
-        
-        # Electronics - Tablet
-        (None, "ProTab 12", "PT12-2023", 
-         "The ProTab 12 features a stunning 12.9-inch Liquid Retina XDR display with mini-LED technology, delivering an exceptional visual experience for both creative work and entertainment. Powered by the M2 chip, it offers desktop-class performance in a thin and light design. The tablet supports the latest ProStylus with magnetic attachment and wireless charging, making digital art and note-taking feel natural and responsive. With up to 10 hours of battery life, a versatile USB-C port, and support for the latest ProKeyboard attachment, it can easily replace a laptop for many workflows. The advanced camera system includes a 12MP ultra-wide front camera with Center Stage for video calls, and a professional-grade rear camera system for document scanning and photography.",
-         "Professional-grade tablet with desktop-class performance and stunning XDR display.", 
-         999.99, 949.99, 600.00, 85, 1, "TabTech", 1.5, 
-         json.dumps({"length": 11.04, "width": 8.46, "height": 0.25}), 1, 1),
-        
-        # Home & Kitchen - Coffee Maker
-        (None, "Barista Pro Coffee System", "BPCS-X1", 
-         "The Barista Pro Coffee System brings cafe-quality coffee to your home with its professional 15-bar pressure pump and precise temperature control system. The integrated conical burr grinder with 30 settings ensures the perfect grind for any coffee variety, while the digital display makes it easy to adjust brewing parameters. A powerful steam wand allows for cafe-quality microfoam for latte art. The system heats up in just 3 seconds and can brew a shot of espresso in under 30 seconds. With programmable shot volumes, automatic cleaning cycles, and a generous 2-liter water tank, this machine offers both convenience and exceptional coffee quality. The sleek stainless steel construction provides durability and complements any kitchen decor.",
-         "Professional-grade espresso machine with integrated grinder and rapid heating system.", 
-         799.99, 749.99, 400.00, 40, 8, "BrewMaster", 9.5, 
-         json.dumps({"length": 13.5, "width": 12.5, "height": 16}), 0, 1),
-        
-        # Home & Kitchen - Air Purifier
-        (None, "CleanAir Pro", "CAP-H13", 
-         "The CleanAir Pro air purifier features a true HEPA H13 filter that captures 99.97% of particles as small as 0.3 microns, including dust, pollen, pet dander, and smoke. The activated carbon filter eliminates odors, VOCs, and harmful gases, while the UV-C light neutralizes airborne bacteria and viruses. Designed for spaces up to 800 square feet, it can completely filter the air 5 times per hour. The smart air quality sensor continuously monitors your environment and automatically adjusts the fan speed. With whisper-quiet operation at just 24dB on sleep mode, it won't disturb you while sleeping or working. Control settings via the touch display or connect to your smart home system through WiFi for voice control and scheduling.",
-         "Advanced air purifier with true HEPA H13 filter and smart air quality monitoring.", 
-         299.99, 279.99, 120.00, 60, 8, "PureHome", 7.2, 
-         json.dumps({"length": 14.5, "width": 8.8, "height": 25}), 0, 1),
-        
-        # Home & Kitchen - Blender
-        (None, "UltraBlend Professional", "UB-PRO-2000", 
-         "The UltraBlend Professional sets the standard for high-performance blending with its 2000-watt motor and hardened stainless steel blades. The variable speed control and pulse feature give you precise control for any recipe, from silky smoothies to hot soups. The 64-ounce BPA-free jar is designed to create a powerful vortex that pulls ingredients down for consistent blending, while the tamper helps process thick mixtures. The blender features 6 pre-programmed settings for one-touch convenience, and the digital timer helps achieve precise blend times. The self-cleaning program makes cleanup effortless - just add water and dish soap, and run the cleaning cycle. Built with commercial-grade construction for durability, this blender is backed by a 7-year warranty.",
-         "Professional-grade 2000-watt blender with variable speed control and preset programs.", 
-         349.99, 329.99, 150.00, 55, 8, "KitchenElite", 5.8, 
-         json.dumps({"length": 8.5, "width": 7.8, "height": 17.25}), 0, 1),
-        
-        # Clothing - Men's
-        (None, "Performance Stretch Chinos", "MSC-KHAKI", 
-         "These modern chinos combine style and performance with their innovative stretch fabric that offers exceptional comfort and mobility. The moisture-wicking material keeps you cool and dry throughout the day, while the wrinkle-resistant finish ensures you look polished with minimal maintenance. The hidden security pocket provides a safe place for small valuables. With a tailored fit that's not too slim and not too relaxed, these versatile pants transition seamlessly from office to casual settings. The reinforced stitching and quality construction ensure long-lasting wear, while the pre-washed fabric gives a soft, broken-in feel from the first wear. Available in multiple colors, these will quickly become a staple in your wardrobe.",
-         "Performance chinos with moisture-wicking stretch fabric and tailored fit.", 
-         79.99, 69.99, 30.00, 120, 6, "Modern Menswear", 0.6, 
-         json.dumps({"length": 40, "width": 12, "height": 1}), 0, 1),
-        
-        # Clothing - Men's
-        (None, "Waterproof Hiking Jacket", "MHJ-GORETEX", 
-         "This premium hiking jacket offers reliable protection against the elements with its 3-layer Gore-Tex construction, providing waterproof, windproof, yet breathable performance. The adjustable storm hood, water-resistant zippers, and taped seams ensure you stay dry in heavy rain, while pit zips allow for ventilation during intense activity. Multiple pockets, including chest pockets accessible while wearing a backpack, offer convenient storage for essentials. The jacket features articulated sleeves for freedom of movement and adjustable cuffs and hem to seal out the elements. Compatible with the brand's inner layers for a versatile layering system, this jacket is perfect for year-round adventures. The durable water repellent finish is PFC-free, reflecting our commitment to environmental responsibility.",
-         "Premium 3-layer Gore-Tex hiking jacket with waterproof breathable protection.", 
-         299.99, 279.99, 120.00, 80, 6, "Alpine Gear", 0.85, 
-         json.dumps({"length": 29, "width": 22, "height": 3}), 0, 1),
-        
-        # Clothing - Women's
-        (None, "Yoga Flow Leggings", "WYL-HIGHRISE", 
-         "These premium yoga leggings combine performance and comfort with their buttery-soft, four-way stretch fabric that moves with your body through any pose. The high-rise, wide waistband provides gentle compression and support without digging in, while the seamless construction eliminates chafing during dynamic movements. The moisture-wicking, quick-dry material keeps you comfortable throughout your practice, and the opacity testing ensures they remain non-see-through even in deep stretches. A hidden inner pocket at the waistband holds small essentials like keys or cards. Designed with flattering seam placement and available in a range of colors, these leggings transition easily from yoga studio to casual wear. The fabric is treated with an anti-bacterial finish to prevent odors, even after multiple wears.",
-         "Premium high-rise yoga leggings with four-way stretch and hidden pocket.", 
-         89.99, 79.99, 35.00, 150, 7, "Flow Athletics", 0.3, 
-         json.dumps({"length": 36, "width": 12, "height": 0.5}), 0, 1),
-        
-        # Clothing - Women's
-        (None, "Cashmere Blend Oversized Sweater", "WCS-OVERSIZE", 
-         "This luxurious oversized sweater blends premium cashmere with responsibly sourced wool for exceptional softness and warmth without weight. The relaxed silhouette with dropped shoulders creates an effortlessly stylish look that pairs perfectly with slim pants or leggings. Ribbed cuffs and hem add structure to the relaxed fit, while the slight boat neck frames the collarbone beautifully. The versatile design works equally well for casual weekend wear or dressed up for evenings out. With careful construction techniques to prevent pilling, this sweater is designed to become even softer with wear while maintaining its shape. Available in a curated selection of timeless colors, this piece will become a cherished staple in your wardrobe for years to come.",
-         "Luxurious oversized sweater with premium cashmere blend and relaxed silhouette.", 
-         149.99, 139.99, 60.00, 85, 7, "Luxe Essentials", 0.5, 
-         json.dumps({"length": 28, "width": 24, "height": 1}), 0, 1),
-        
+    # Get all existing categories
+    cursor.execute("SELECT id, name FROM categories")
+    categories = cursor.fetchall()
+    category_map = {id: name for id, name in categories}
+    
+    # Product data templates for generating realistic product data
+    product_templates = {
+        # Electronics
+        1: { # Electronics category
+            "brands": ["TechPro", "NextGen", "ElectroVision", "InnovateX", "FutureTech", "SmartLife", "TechWave", "DigiTrend", "ElectraPrime", "CyberTech"],
+            "prefixes": ["Smart", "Ultra", "Pro", "Elite", "Premium", "Advanced", "Digital", "Wireless", "High-Performance", "Intelligent"],
+            "products": ["Laptop", "Tablet", "Speaker System", "Smartwatch", "Wireless Earbuds", "Home Theater", "Gaming Console", "Smart TV", "Power Bank", "Bluetooth Headphones"],
+            "price_range": (199, 2499),
+            "features": [
+                "Advanced AI integration for personalized user experience",
+                "Military-grade security protocols for data protection",
+                "Premium construction with aerospace-grade materials",
+                "Industry-leading battery life with rapid charging technology",
+                "Seamless ecosystem integration across multiple devices",
+                "Voice control with multi-language support",
+                "Adaptive learning algorithms that improve over time",
+                "Customizable interface with limitless personalization options",
+                "Cloud synchronization with automatic backup",
+                "Revolutionary energy efficiency with eco-friendly design"
+            ]
+        },
+        # Smartphones
+        2: {
+            "brands": ["XPhone", "GalaxyTech", "PixelPro", "MobiMax", "SmartFone", "CellEdge", "OneTouch", "MobileX", "PhonePro", "TechCell"],
+            "prefixes": ["Ultra", "Pro", "Max", "Edge", "Nova", "Prime", "Elite", "Flex", "Power", "Premium"],
+            "products": ["Smartphone", "Foldable Phone", "5G Phone", "Camera Phone", "Gaming Phone", "Rugged Phone", "Slim Phone", "Note Phone", "Mini Phone", "Plus Phone"],
+            "price_range": (499, 1499),
+            "features": [
+                "Revolutionary camera system with computational photography",
+                "All-day battery life with intelligent power management",
+                "Cutting-edge display with HDR10+ certification",
+                "Processor built on advanced nanometer architecture",
+                "Biometric security with facial and fingerprint recognition",
+                "Water and dust resistance for all-weather use",
+                "Expansive storage options with cloud integration",
+                "Immersive audio system with spatial sound",
+                "Advanced connectivity with Wi-Fi 6E and 5G support",
+                "Durable design with Corning Gorilla Glass protection"
+            ]
+        },
+        # Laptops
+        3: {
+            "brands": ["UltraBook", "MacroTech", "CompuPro", "LaptopX", "TechBook", "PowerLap", "NotePro", "ComputeX", "BookTech", "LapElite"],
+            "prefixes": ["Ultra", "Pro", "Elite", "Power", "Gaming", "Creative", "Business", "Ultimate", "Slim", "Premium"],
+            "products": ["Laptop", "Notebook", "Ultrabook", "2-in-1 Convertible", "Gaming Laptop", "Workstation", "Chromebook", "Studio Laptop", "Thin & Light", "Professional Laptop"],
+            "price_range": (699, 3499),
+            "features": [
+                "Desktop-class performance in a portable design",
+                "Revolutionary cooling system for sustained performance",
+                "Studio-quality microphone array for clear communication",
+                "Color-calibrated display for professional content creation",
+                "Military-grade durability testing for reliability",
+                "Backlit keyboard with customizable RGB lighting",
+                "Multi-touch gesture support with precision trackpad",
+                "Expansive connectivity options with Thunderbolt ports",
+                "Immersive audio with Dolby Atmos certification",
+                "All-day battery life with rapid charging technology"
+            ]
+        },
+        # Audio
+        4: {
+            "brands": ["AudioTech", "SoundWave", "BeatPro", "AudioPhile", "SonicLife", "ClearSound", "RhythmX", "MelodyTech", "SoundCore", "AcousticPro"],
+            "prefixes": ["Premium", "Ultra", "Pro", "Elite", "Studio", "Dynamic", "Immersive", "Wireless", "Noise-Canceling", "High-Fidelity"],
+            "products": ["Headphones", "Earbuds", "Wireless Earphones", "Home Speaker", "Soundbar", "Portable Speaker", "DJ Headphones", "Gaming Headset", "Studio Monitors", "Bluetooth Speaker"],
+            "price_range": (99, 699),
+            "features": [
+                "Active noise cancellation with adaptive environmental sensing",
+                "Studio-quality sound profile tuned by Grammy-winning producers",
+                "Custom-engineered acoustic architecture for precise sound",
+                "Spatial audio with dynamic head tracking",
+                "Ultra-low latency for perfect audio-visual synchronization",
+                "Sweat and water resistance for active lifestyles",
+                "Advanced Bluetooth codecs for lossless wireless audio",
+                "Intuitive touch controls with customizable functions",
+                "Multi-device connectivity with seamless switching",
+                "Voice assistant integration with wake word activation"
+            ]
+        },
+        # Clothing
+        5: {
+            "brands": ["StyleLife", "FashionEdge", "UrbanChic", "TrendSetters", "ModernWear", "ElegantStyle", "FashionForward", "ClassicThreads", "StylishEssentials", "PremiumApparel"],
+            "prefixes": ["Premium", "Luxury", "Modern", "Classic", "Designer", "Signature", "Essential", "Contemporary", "Seasonal", "Bespoke"],
+            "products": ["Collection", "Ensemble", "Wardrobe", "Attire", "Outfit", "Fashion Line", "Apparel Set", "Clothing Range", "Style Series", "Garment Collection"],
+            "price_range": (99, 499),
+            "features": [
+                "Ethically sourced materials from sustainable suppliers",
+                "Advanced fabric technology for comfort and durability",
+                "Versatile designs that transition from day to evening",
+                "Tailored fit with flattering silhouettes for all body types",
+                "Season-spanning styles for year-round wearability",
+                "Wrinkle-resistant finish for easy care and maintenance",
+                "Innovative moisture-wicking properties for all-day comfort",
+                "Thoughtful details with premium hardware and finishes",
+                "Exclusive patterns designed by renowned textile artists",
+                "Limited edition releases with numbered authenticity"
+            ]
+        },
+        # Men's
+        6: {
+            "brands": ["GentlemanCraft", "ModernMan", "MaleEssentials", "DapperStyle", "ManCraft", "UrbanGent", "ClassicMen", "MensFinest", "MaleElite", "GentCore"],
+            "prefixes": ["Premium", "Classic", "Modern", "Executive", "Athletic", "Urban", "Outdoor", "Professional", "Signature", "Rugged"],
+            "products": ["Dress Shirt", "Chinos", "Suit", "Jeans", "Polo Shirt", "Sweater", "Oxford Shirt", "Performance Tee", "Blazer", "Cargo Pants"],
+            "price_range": (49, 399),
+            "features": [
+                "Tailored fit with strategic stretch for unrestricted movement",
+                "Wrinkle-resistant fabric for all-day professional appearance",
+                "Moisture-wicking technology for comfort in any environment",
+                "Hidden security pockets for valuables while traveling",
+                "Stain-resistant finish that maintains like-new appearance",
+                "Convertible design features for versatile styling options",
+                "Temperature-regulating material for year-round wear",
+                "Reinforced stitching at high-stress points for durability",
+                "Classic design elements with modern performance upgrades",
+                "Eco-friendly construction from sustainable materials"
+            ]
+        },
+        # Women's
+        7: {
+            "brands": ["FemmeChic", "EleganceEra", "ModernWoman", "GraceStyle", "ChicEssentials", "FeminineFlair", "WomanlyGrace", "LadyLuxe", "FemStyle", "WomanCraft"],
+            "prefixes": ["Elegant", "Chic", "Modern", "Classic", "Feminine", "Designer", "Signature", "Luxe", "Essential", "Sophisticated"],
+            "products": ["Blouse", "Dress", "Skirt", "Cardigan", "Jeans", "Jumpsuit", "Blazer", "Wrap Dress", "Knit Sweater", "Palazzo Pants"],
+            "price_range": (59, 449),
+            "features": [
+                "Figure-flattering silhouette with thoughtful tailoring",
+                "Versatile styling options for day-to-evening transitions",
+                "Wrinkle-resistant fabric perfect for travel or busy days",
+                "Premium stretch material that maintains shape over time",
+                "Hidden support elements for confidence and comfort",
+                "Adjustable features for customizable fit",
+                "Strategic pocket placement for functionality without bulk",
+                "Temperature-regulating fabric for year-round comfort",
+                "Engineered with movement in mind for unrestricted activity",
+                "Timeless design elements with contemporary details"
+            ]
+        },
+        # Home & Kitchen
+        8: {
+            "brands": ["HomeComfort", "KitchenCraft", "DomesticBliss", "CulinaryEdge", "HomeEssentials", "GourmetPro", "DwellLuxe", "KitchenElite", "HomeSavvy", "CulinaryMaster"],
+            "prefixes": ["Professional", "Gourmet", "Premium", "Artisanal", "Smart", "Modern", "Luxury", "Essential", "Innovative", "Signature"],
+            "products": ["Coffee Maker", "Blender", "Food Processor", "Stand Mixer", "Toaster Oven", "Cookware Set", "Knife Set", "Air Fryer", "Pressure Cooker", "Bakeware Collection"],
+            "price_range": (99, 799),
+            "features": [
+                "Professional-grade construction for home kitchens",
+                "Innovative technology that simplifies complex techniques",
+                "Time-saving features for busy households",
+                "Precision engineering for consistent, restaurant-quality results",
+                "Versatile functionality that replaces multiple appliances",
+                "Thoughtful design for intuitive operation and cleaning",
+                "Energy-efficient performance with eco-friendly materials",
+                "Space-saving design with multi-functional capabilities",
+                "Smart connectivity for recipes and remote operation",
+                "Durable construction backed by comprehensive warranty"
+            ]
+        },
         # Books
-        (None, "The Quantum Paradox", "BOOK-QP-HC", 
-         "In this groundbreaking exploration of quantum physics and its philosophical implications, renowned physicist Dr. Maya Blackwell bridges the gap between cutting-edge science and profound questions about reality, consciousness, and the universe. Through accessible explanations and thought experiments, readers with little scientific background can grasp the strange and counter-intuitive nature of quantum mechanics. The book examines how quantum discoveries challenge our basic assumptions about causality, determinism, and the nature of existence itself. Blackwell weaves together theoretical physics, experimental breakthroughs, and philosophical inquiry to demonstrate how quantum science is forcing us to reconsider fundamental questions about the cosmos and our place within it. Complete with illustrations and diagrams to clarify complex concepts, this book invites readers on an intellectual journey that will forever change how they understand reality.",
-         "Accessible exploration of quantum physics and its profound philosophical implications.", 
-         28.99, 24.99, 10.00, 200, 9, "Horizon Press", 0.95, 
-         json.dumps({"length": 9.3, "width": 6.2, "height": 1.3}), 0, 1),
-        
-        # Books
-        (None, "Culinary Journeys: Flavors of the Silk Road", "BOOK-CJSR-HC", 
-         "This stunning cookbook and cultural exploration traces the ancient Silk Road through its diverse cuisines, spanning from the Mediterranean to China. Award-winning chef and food historian Sophia Lin combines authentic recipes with rich storytelling, historical context, and gorgeous photography. Each chapter focuses on a different region along the historic trading route, exploring how spices, ingredients, and techniques moved between cultures and evolved over centuries. The 85+ recipes range from Levantine mezze and Turkish manti to Uzbek plov and Chinese Muslim lamb dishes, all adapted for modern home kitchens without sacrificing authenticity. Lin's thoughtful essays examine how food serves as a living cultural heritage and connects us across time and geography. This book is both a practical cooking resource and an invitation to understand diverse cultures through their culinary traditions.",
-         "Beautiful cookbook exploring the cuisines and cultures along the ancient Silk Road.", 
-         39.99, 34.99, 15.00, 150, 9, "Culinary Library", 1.6, 
-         json.dumps({"length": 10.5, "width": 8.5, "height": 1.2}), 0, 1),
-        
-        # Home & Kitchen - Smart Home
-        (None, "SmartHome Hub Controller", "SHH-PRO", 
-         "This advanced smart home hub serves as the central command center for your connected home, seamlessly integrating devices across different brands and communication protocols. Supporting Wi-Fi, Bluetooth, Zigbee, Z-Wave, and Thread, it eliminates the need for multiple brand-specific hubs. The intuitive touchscreen interface allows direct control, while the powerful app enables automation routines based on time, presence, or triggers from connected devices. Compatible with over 10,000 smart products including lights, thermostats, locks, cameras, and entertainment systems, it allows you to expand your smart home over time. Voice control works with all major assistants, and bank-level encryption protects your privacy and security. The local processing option reduces cloud dependence for faster response and continued function during internet outages.",
-         "Comprehensive smart home hub supporting multiple protocols with intuitive control interface.", 
-         249.99, 229.99, 100.00, 75, 8, "SmartLife", 0.8, 
-         json.dumps({"length": 5.8, "width": 5.8, "height": 1.2}), 0, 1),
-        
-        # Electronics - Camera
-        (None, "ProCapture Mirrorless Camera", "PC-M50", 
-         "The ProCapture M50 mirrorless camera combines professional-grade features with intuitive operation in a compact body. The 32MP full-frame sensor delivers exceptional image quality with 15 stops of dynamic range, while the advanced image processor enables continuous shooting at 20fps with autofocus tracking. The 5-axis in-body stabilization provides up to 8 stops of compensation, allowing handheld shooting in challenging conditions. For video creators, the camera offers 4K 60fps 10-bit recording with professional color profiles. The hybrid autofocus system with 759 phase-detection points ensures subjects stay sharp, even during fast action. The weather-sealed magnesium alloy body protects against dust and moisture, while dual card slots provide backup security. With Wi-Fi and Bluetooth connectivity, images can be transferred wirelessly to your devices for immediate sharing.",
-         "Professional mirrorless camera with 32MP full-frame sensor and advanced video capabilities.", 
-         1999.99, 1899.99, 1100.00, 40, 1, "ProCapture", 1.4, 
-         json.dumps({"length": 5.3, "width": 3.8, "height": 3.2}), 1, 1),
-        
+        9: {
+            "brands": ["MindScape", "LiteraryVision", "IntellectPress", "WisdomHouse", "ThoughtCraft", "KnowledgeRealm", "PageTurner", "MindfulReads", "BrilliantWords", "InsightPublishing"],
+            "prefixes": ["Essential", "Complete", "Definitive", "Modern", "Comprehensive", "Ultimate", "Practical", "Advanced", "Beginner's", "Professional"],
+            "products": ["Guide", "Handbook", "Encyclopedia", "Masterclass", "Compendium", "Collection", "Manual", "Sourcebook", "Reference", "Anthology"],
+            "price_range": (19, 89),
+            "features": [
+                "Comprehensive coverage with clear, accessible language",
+                "Expert insights from leading authorities in the field",
+                "Practical examples and case studies for real-world application",
+                "Step-by-step instructions with detailed illustrations",
+                "Supplemental online resources and interactive content",
+                "Thoughtfully organized for both reference and cover-to-cover reading",
+                "Distillation of complex concepts into actionable knowledge",
+                "Up-to-date research and cutting-edge developments",
+                "Balanced perspective with diverse viewpoints",
+                "Engaging narrative that makes complex topics fascinating"
+            ]
+        },
         # Sports & Outdoors
-        (None, "Carbon Fiber Mountain Bike", "MTB-CARBON-PRO", 
-         "This high-performance mountain bike features a lightweight carbon fiber frame that offers the perfect balance of stiffness for power transfer and compliance for trail comfort. The cutting-edge suspension system provides 140mm of travel with adjustable compression and rebound to handle everything from technical climbs to aggressive descents. The 12-speed electronic shifting system delivers precise gear changes even under load, while the hydraulic disc brakes offer powerful stopping control in all conditions. Tubeless-ready carbon wheels reduce rotating weight for improved acceleration and responsiveness. The dropper seatpost allows for quick position changes to tackle varying terrain. Every component has been selected for the optimal blend of performance, durability, and weight savings, resulting in a versatile trail bike that excels in all mountain conditions.",
-         "Professional-grade carbon fiber mountain bike with electronic shifting and premium suspension.", 
-         3499.99, 3299.99, 2000.00, 15, 10, "AlpineTrail", 11.3, 
-         json.dumps({"length": 69, "width": 24, "height": 43}), 0, 1),
+        10: {
+            "brands": ["PeakPerformance", "OutdoorElite", "AthleticEdge", "WildernessGear", "SportsPro", "TrailMaster", "FitnessFrontier", "ActiveLife", "OutdoorExcellence", "SportsCraft"],
+            "prefixes": ["Professional", "Ultimate", "Advanced", "Extreme", "Performance", "Endurance", "Tactical", "Pro-Grade", "Competition", "Expedition"],
+            "products": ["Trail Running Shoes", "Mountain Bike", "Hiking Backpack", "Camping Tent", "Fitness Tracker", "Yoga Mat", "Golf Club Set", "Tennis Racket", "Ski Goggles", "Climbing Harness"],
+            "price_range": (79, 1499),
+            "features": [
+                "Performance-engineered design tested by professional athletes",
+                "Lightweight construction that doesn't compromise durability",
+                "Weather-resistant materials for all-condition reliability",
+                "Ergonomic design for comfort during extended use",
+                "Advanced technology that enhances natural capabilities",
+                "Versatile functionality for multiple activities and environments",
+                "Strategic ventilation and temperature management",
+                "Impact protection and safety features for peace of mind",
+                "Quick-adjust components for personalized fit in seconds",
+                "Reflective elements for visibility in low-light conditions"
+            ]
+        },
+        # Beauty & Personal Care (newly added category)
+        11: {
+            "brands": ["PureLuxe", "GlowEssence", "BeautyScience", "RadiantSkin", "LuxeBeauty", "NaturalGlow", "EssentialBeauty", "PristineBeauty", "VitalRadiance", "PureFormula"],
+            "prefixes": ["Advanced", "Premium", "Intensive", "Essential", "Professional", "Luxury", "Nourishing", "Revitalizing", "Rejuvenating", "Purifying"],
+            "products": ["Skincare Set", "Anti-Aging Cream", "Hair Care System", "Facial Serum", "Makeup Collection", "Body Treatment", "Exfoliant Scrub", "Hydrating Mask", "Cleansing System", "Beauty Tools"],
+            "price_range": (39, 299),
+            "features": [
+                "Dermatologist-developed formula for all skin types",
+                "Clinically proven results backed by scientific research",
+                "Clean ingredient list free from harmful additives",
+                "Advanced delivery system for deep penetration",
+                "Multi-functional benefits from a single product",
+                "Time-release technology for sustained effectiveness",
+                "Innovative applicators for precision and convenience",
+                "Eco-conscious packaging from sustainable materials",
+                "Synergistic formulations that enhance each component's benefits",
+                "Professional-grade quality for at-home use"
+            ]
+        },
+        # Furniture & Decor (newly added category)
+        12: {
+            "brands": ["ModernDwelling", "HomeHarmony", "LuxeHabitat", "ElegantSpace", "UrbanNest", "DwellCraft", "InteriorVision", "HabitatPro", "DwellLuxe", "SpaceStyle"],
+            "prefixes": ["Modern", "Luxury", "Classic", "Contemporary", "Ergonomic", "Designer", "Premium", "Handcrafted", "Signature", "Executive"],
+            "products": ["Sofa", "Dining Set", "Bedroom Collection", "Office Desk", "Lounge Chair", "Coffee Table", "Bookshelf", "Console Table", "Accent Cabinet", "Wall Art"],
+            "price_range": (299, 2999),
+            "features": [
+                "Heirloom-quality construction using time-honored techniques",
+                "Ergonomic design for comfort and proper body alignment",
+                "Space-saving features perfect for urban living",
+                "Modular components that adapt to changing needs",
+                "Premium materials selected for beauty and durability",
+                "Multifunctional design with hidden storage solutions",
+                "Customizable elements for personalized aesthetic",
+                "Sustainably sourced materials with eco-friendly finishes",
+                "Precision-engineered mechanisms for smooth operation",
+                "Timeless design that transcends trends"
+            ]
+        },
+        # Toys & Games (newly added category)
+        13: {
+            "brands": ["ImaginePlay", "FunQuest", "PlayfulMinds", "WonderToys", "CreativeKids", "PlayGenius", "JoyfulPlay", "BrainChild", "FunWorks", "PlaySmart"],
+            "prefixes": ["Educational", "Interactive", "Creative", "Advanced", "Classic", "Strategic", "Developmental", "Ultimate", "Smart", "Innovative"],
+            "products": ["Building Set", "Board Game", "Science Kit", "Art Supplies", "Puzzle Collection", "Coding Toy", "Role Play Set", "Educational Game", "Strategy Game", "Outdoor Play Equipment"],
+            "price_range": (29, 199),
+            "features": [
+                "Curriculum-aligned activities developed by education experts",
+                "Open-ended play possibilities that grow with the child",
+                "Screen-free entertainment that builds real-world skills",
+                "Collaborative elements that strengthen social connections",
+                "Strategic thinking challenges for cognitive development",
+                "High-quality construction designed for years of use",
+                "Thoughtfully designed to engage multiple learning styles",
+                "Progressive difficulty levels for continuous challenge",
+                "Cross-generational appeal for family bonding time",
+                "Develops crucial STEM/STEAM skills through play"
+            ]
+        },
+        # Pet Supplies (newly added category)
+        14: {
+            "brands": ["PetPerfect", "FurryFriend", "PawComfort", "PetElite", "CompanionCare", "PetPremium", "TailWaggers", "PetEssentials", "FurBabies", "PawVIP"],
+            "prefixes": ["Premium", "Deluxe", "Orthopedic", "Interactive", "Advanced", "Therapeutic", "Comfort", "Eco-Friendly", "Professional", "Natural"],
+            "products": ["Pet Bed", "Training System", "Grooming Kit", "Toy Collection", "Feeding Station", "Travel Carrier", "Health Supplement", "Exercise Equipment", "Harness", "Cleaning Solution"],
+            "price_range": (39, 249),
+            "features": [
+                "Veterinarian-developed design with animal wellness focus",
+                "Intuitive features that work with natural pet behaviors",
+                "Premium materials selected for safety and durability",
+                "Thoughtful ergonomics for pets with mobility challenges",
+                "Multi-functional design that adapts to changing needs",
+                "Easy-clean surfaces that resist bacteria and odors",
+                "Calming elements to reduce anxiety and stress",
+                "Interactive components that provide mental stimulation",
+                "Sustainable materials with non-toxic finishes",
+                "Space-efficient design that complements home décor"
+            ]
+        }
+    }
+
+    # Calculate how many products to create per category
+    total_categories = len(product_templates)
+    base_products_per_category = 200 // total_categories
+    extra_products = 200 % total_categories
+    
+    # Distribute products across categories
+    category_product_counts = {}
+    for cat_id in product_templates.keys():
+        if extra_products > 0:
+            category_product_counts[cat_id] = base_products_per_category + 1
+            extra_products -= 1
+        else:
+            category_product_counts[cat_id] = base_products_per_category
+    
+    # Product description templates
+    description_templates = [
+        "The {prefix} {product_name} sets a new standard in {category} with its {feature1}. Designed for {user_type}, it offers {feature2} and {feature3}. The innovative {highlight_feature} provides {benefit}, while the {secondary_feature} ensures {secondary_benefit}. Built with {material} and finished with {quality}, this {product_type} delivers {performance} whether you're {use_case1} or {use_case2}. With {warranty} and {support}, the {brand} {product_name} is the perfect choice for those who demand excellence.",
         
-        # Sports & Outdoors
-        (None, "Ultralight Backpacking Tent", "UBT-2P", 
-         "This ultralight backpacking tent represents the perfect balance between weight, durability, and livability for serious backcountry adventures. Weighing just 2 pounds 8 ounces, it's easy to carry on long treks, while the advanced DAC Featherlite aluminum poles and ripstop nylon construction ensure reliability in challenging conditions. The freestanding design features two doors and vestibules for convenient access and gear storage. The strategic mesh panels provide excellent ventilation while keeping insects out, and the silicone-treated rainfly delivers exceptional waterproofing with a 3000mm rating. The tent can be set up in under 3 minutes with the color-coded system, even in low light. Interior pockets and gear lofts keep essentials organized, while reflective guylines prevent nighttime tripping. Designed to comfortably fit two people with a floor space optimized for standard sleeping pads.",
-         "Ultralight 2-person backpacking tent weighing just 2.5 pounds with exceptional weather protection.", 
-         349.99, 299.99, 150.00, 35, 10, "TrailLite", 2.5, 
-         json.dumps({"length": 18, "width": 6, "height": 6}), 0, 1),
+        "Introducing the {brand} {prefix} {product_name}, the ultimate solution for {user_type} looking for exceptional {category} performance. Featuring {feature1} and {feature2}, this {product_type} delivers {performance} in all conditions. The {highlight_feature} technology provides {benefit}, while {secondary_feature} ensures {secondary_benefit}. Crafted from {material} with meticulous attention to {quality}, it's designed to excel whether you're {use_case1} or {use_case2}. Backed by {warranty} and {support}, it represents the pinnacle of {brand}'s innovation.",
         
-        # Home & Kitchen - Cookware
-        (None, "Professional Enameled Cast Iron Dutch Oven", "ECIDO-5QT", 
-         "This premium 5-quart dutch oven combines the superior heat retention and distribution of cast iron with a porcelain enamel coating that eliminates the need for seasoning and allows for cooking acidic foods. The tight-fitting lid locks in moisture for perfect braises and stews, while the wide loop handles provide a secure grip even with oven mitts. The light-colored interior enamel makes it easy to monitor cooking progress and prevent burning. Suitable for all cooktops including induction, this versatile pot transitions seamlessly from stovetop to oven (safe up to 500°F). The chip-resistant enamel exterior comes in a range of rich colors and requires no special maintenance. From slow-cooking stews to baking artisan bread, this heirloom-quality piece delivers exceptional results and will become the centerpiece of your kitchen for generations.",
-         "Premium 5-quart enameled cast iron dutch oven with superior heat retention and distribution.", 
-         279.99, 249.99, 100.00, 60, 8, "Heritage Cookware", 12.5, 
-         json.dumps({"length": 11.8, "width": 9.8, "height": 6.2}), 0, 1),
+        "Experience unparalleled {category} excellence with the {brand} {prefix} {product_name}. Engineered specifically for {user_type}, it combines {feature1} with {feature2} for outstanding {performance}. The revolutionary {highlight_feature} delivers {benefit}, complemented by {secondary_feature} that provides {secondary_benefit}. Meticulously crafted using {material} and finished to {quality} standards, this {product_type} excels in {use_case1} and {use_case2} scenarios. With {warranty} and industry-leading {support}, it embodies {brand}'s commitment to innovation and quality.",
         
-        # Electronics - Computer Accessories
-        (None, "Ergonomic Mechanical Keyboard", "EMK-TKL", 
-         "This premium mechanical keyboard combines exceptional typing experience with ergonomic design for comfort during extended use. The tenkeyless layout saves desk space while retaining function and arrow keys for productivity. Premium mechanical switches (available in tactile, linear, or clicky) offer precise actuation and are rated for 80 million keystrokes. The split ergonomic design and included magnetic wrist rest reduce strain on wrists and shoulders during long typing sessions. PBT double-shot keycaps resist shine and feature dye-sublimated legends that never fade. Customizable RGB backlighting with per-key control allows for personalized illumination, while programmable macros and key remapping support efficient workflows. Connect via USB-C or Bluetooth to up to 3 devices with easy switching. The aircraft-grade aluminum frame ensures durability while maintaining a refined aesthetic.",
-         "Premium ergonomic mechanical keyboard with customizable switches and split design.", 
-         149.99, 139.99, 70.00, 90, 1, "ErgoTech", 0.9, 
-         json.dumps({"length": 14.5, "width": 6.2, "height": 1.5}), 0, 1),
-        
-        # Beauty & Personal Care
-        (None, "Advanced Skincare Collection", "ASC-ESSENTIAL", 
-         "This comprehensive skincare system delivers professional-grade results through a synergistic four-step routine backed by dermatological research. The gentle enzyme cleanser removes impurities without disrupting the skin barrier, while the vitamin C serum contains a stable 15% L-ascorbic acid formula to brighten and protect against environmental damage. The peptide moisturizer combines three advanced peptide complexes with hyaluronic acid to boost collagen production and deeply hydrate, and the broad-spectrum mineral sunscreen offers SPF 40 protection without leaving a white cast. All formulations are free from parabens, sulfates, phthalates, and artificial fragrances, making them suitable for sensitive skin. The airless pump packaging preserves ingredient efficacy and ensures hygienic application. This science-backed system addresses multiple skin concerns including fine lines, uneven texture, dullness, and environmental protection.",
-         "Dermatologist-developed skincare system with four essential products for transformative results.", 
-         189.99, 169.99, 75.00, 100, 11, "DermaScience", 1.2, 
-         json.dumps({"length": 8, "width": 6, "height": 6}), 0, 1),
-        
-        # Beauty & Personal Care
-        (None, "Professional Hair Styling Tool", "PHST-MULTI", 
-         "This innovative 5-in-1 styling tool revolutionizes hair styling with interchangeable attachments that create everything from sleek straight styles to bouncy curls and defined waves. The digital temperature control ranges from 280°F to 450°F for all hair types, while the advanced ceramic tourmaline barrel ensures even heat distribution and reduces frizz by emitting negative ions. The cool-touch barrel tips and heat-resistant glove provide safe handling during styling. Auto shut-off after 60 minutes provides peace of mind, and worldwide voltage compatibility makes it perfect for travel. The tool heats up in just 30 seconds, and the 9-foot swivel cord allows for easy movement during styling. Included attachments feature a 1-inch curling barrel, flat iron plates, a volumizing root lifter, and two different-sized wave plates, making this the only styling tool you'll need.",
-         "Versatile 5-in-1 hair styling tool with interchangeable attachments for multiple styling options.", 
-         129.99, 119.99, 55.00, 70, 11, "StylePro", 1.3, 
-         json.dumps({"length": 14, "width": 4, "height": 4}), 0, 1),
-        
-        # Furniture & Decor
-        (None, "Modular Sofa System", "MSS-SECTIONAL", 
-         "This innovative modular sofa system adapts to your needs with repositionable sections that can be arranged into countless configurations. The solid hardwood frame and sinuous spring suspension system ensure durability and comfort for years to come. Premium high-resilience foam cushions wrapped in down-alternative fiber maintain their shape while providing plush comfort. The performance fabric resists stains, fading, and wear while remaining soft and inviting. Each module connects securely with hidden fasteners, allowing you to easily transform your sofa from a standard configuration to a sectional, chaise arrangement, or even a guest bed. The removable and washable covers simplify maintenance, while the timeless design complements any interior style. Available in multiple fabric options and colors, this versatile system grows and changes with your lifestyle, making it the last sofa you'll need to buy.",
-         "Versatile modular sofa system with repositionable sections and premium construction.", 
-         1999.99, 1899.99, 900.00, 20, 12, "FlexLiving", 120.0, 
-         json.dumps({"length": 100, "width": 37, "height": 33}), 0, 1),
-        
-        # Furniture & Decor
-        (None, "Adjustable Standing Desk", "ASD-PRO", 
-         "This premium standing desk transforms any workspace with its smooth, whisper-quiet dual-motor height adjustment system that transitions between sitting and standing positions at 1.5 inches per second. The anti-collision technology prevents damage if the desk meets an obstacle during height changes. The spacious desktop is crafted from sustainable bamboo with a water-resistant finish, supported by a steel frame that eliminates wobbling even at maximum height. The advanced control panel stores four height presets and includes a USB charging port for devices. Cable management solutions keep your workspace tidy, while the integrated power management system protects your electronics. The desk supports up to 350 pounds, accommodating multiple monitors and equipment. Assembly takes less than 30 minutes with the included tools and clear instructions, and the desk is backed by a 10-year warranty.",
-         "Premium electric standing desk with dual motors, bamboo surface, and programmable height presets.", 
-         599.99, 549.99, 250.00, 30, 12, "ErgoSpace", 85.0, 
-         json.dumps({"length": 60, "width": 30, "height": 50}), 0, 1),
-        
-        # Toys & Games
-        (None, "Educational Robotics Kit", "ERK-STEM", 
-         "This comprehensive robotics kit introduces children ages 8-14 to coding, engineering, and problem-solving through engaging hands-on projects. The core controller features a programmable microprocessor compatible with block-based and text-based coding languages, allowing skills to grow as children advance. With over 850 components including structural parts, sensors, motors, and LED lights, kids can build 17 pre-designed robots or create unlimited custom designs. The detailed guidebook explains fundamental STEM concepts while the companion app provides interactive tutorials, coding challenges, and a community to share creations. All electronic components are housed in durable, child-safe casings with secure battery compartments. The kit aligns with educational standards and develops critical 21st-century skills including computational thinking, creativity, and digital literacy. Parents appreciate that the engaging projects limit screen time while teaching valuable tech skills.",
-         "Comprehensive STEM robotics kit with 850+ components for building programmable robots.", 
-         199.99, 179.99, 80.00, 50, 13, "STEM Explorers", 4.2, 
-         json.dumps({"length": 18, "width": 14, "height": 6}), 0, 1),
-        
-        # Toys & Games
-        (None, "Strategic Board Game Collection", "SBGC-DELUXE", 
-         "This premium board game collection brings together five award-winning strategy games in one elegant wooden case. Each game has been carefully selected to offer unique gameplay mechanics that challenge different strategic thinking skills - from resource management and area control to diplomatic negotiation and long-term planning. The set includes the base games plus select expansions, accommodating 2-6 players with gameplay ranging from 45-120 minutes per game. All components are crafted from high-quality materials including wooden pieces, thick cardboard tiles, and premium cards with linen finish. The handsome storage case features felt-lined compartments that perfectly organize all components for easy setup and storage. Comprehensive rulebooks and strategy guides are included, along with exclusive variant rules not available in the standard editions. Perfect for game nights, this collection offers hundreds of hours of engaging gameplay for both new and experienced strategy gamers.",
-         "Premium collection of five award-winning strategy board games in an elegant wooden case.", 
-         149.99, 129.99, 60.00, 40, 13, "Strategic Minds", 9.5, 
-         json.dumps({"length": 16, "width": 12, "height": 8}), 0, 1),
-        
-        # Pet Supplies
-        (None, "Interactive Pet Feeder", "IPF-SMART", 
-         "This innovative smart pet feeder combines precision feeding with interactive features to support your pet's health and mental stimulation. The programmable system dispenses customized portions on schedule, with up to 6 meals per day in portions from 1/8 cup to 4 cups. The slow-feed option prevents gulping and bloating by dispensing larger meals over 15 minutes. Built-in food-recognition sensors prevent jamming and alert you when food levels are low, while the sealed container keeps food fresh and secure from clever pets. The HD camera with night vision and two-way audio lets you check on and talk to your pet remotely. The puzzle feeder mode dispenses small treats as your pet solves simple puzzles, providing mental stimulation. The system works during power and WiFi outages thanks to battery backup and local scheduling backup. The app allows you to monitor feeding patterns and adjust portions based on your pet's activity level, which is tracked through an optional attachment.",
-         "Smart pet feeding system with scheduled dispensing, camera monitoring, and interactive features.", 
-         179.99, 159.99, 70.00, 60, 14, "PetTech", 7.8, 
-         json.dumps({"length": 14, "width": 9, "height": 15}), 0, 1),
-        
-        # Pet Supplies
-        (None, "Orthopedic Pet Bed", "OPB-MEMORY", 
-         "This premium orthopedic pet bed provides therapeutic support for pets of all ages, particularly benefiting those with arthritis, hip dysplasia, or joint issues. The 4-inch memory foam base maintains 90% of its shape and support for 10+ years, contouring to your pet's body to relieve pressure on joints while the bolstered sides offer security and head support. The waterproof inner liner protects the foam from accidents, while the machine-washable microfiber cover resists fur, dirt, and odors. The non-slip bottom keeps the bed in place even on hard floors, and the low entry point allows easy access for senior or mobility-impaired pets. Available in multiple sizes to accommodate pets from 10 to 100+ pounds, this bed combines functional support with a design that complements home décor. Each bed undergoes compression testing to ensure long-term support and comes with a 10-year warranty against flattening.",
-         "Premium orthopedic pet bed with 4-inch memory foam and bolstered sides for joint support.", 
-         129.99, 109.99, 50.00, 75, 14, "ComfortPets", 8.5, 
-         json.dumps({"length": 36, "width": 28, "height": 9}), 0, 1)
+        "The {brand} {prefix} {product_name} redefines what's possible in {category} technology. Created for discerning {user_type}, it features {feature1} and {feature2} for exceptional {performance}. At its core, the {highlight_feature} provides {benefit}, enhanced by {secondary_feature} for {secondary_benefit}. Premium {material} construction with {quality} craftsmanship ensures reliability during {use_case1} and {use_case2}. Complete with {warranty} and {support}, this {product_type} represents {brand}'s unwavering dedication to excellence."
     ]
     
+    # User types by category
+    user_types = {
+        # Electronics
+        1: ["tech enthusiasts", "busy professionals", "creative professionals", "digital nomads", "smart home enthusiasts"],
+        # Smartphones
+        2: ["mobile photographers", "business professionals", "tech-savvy users", "content creators", "on-the-go professionals"],
+        # Laptops
+        3: ["power users", "creative professionals", "business executives", "students", "remote workers"],
+        # Audio
+        4: ["audiophiles", "music lovers", "podcast enthusiasts", "commuters", "fitness enthusiasts"],
+        # Clothing
+        5: ["fashion-forward individuals", "style enthusiasts", "conscious consumers", "trend-setters", "urban professionals"],
+        # Men's
+        6: ["modern gentlemen", "active professionals", "style-conscious men", "outdoor enthusiasts", "business professionals"],
+        # Women's
+        7: ["fashion-forward women", "busy professionals", "active lifestyles", "style-conscious individuals", "urban professionals"],
+        # Home & Kitchen
+        8: ["home chefs", "culinary enthusiasts", "busy families", "entertaining hosts", "gourmet cooks"],
+        # Books
+        9: ["lifelong learners", "professionals", "enthusiasts", "students", "knowledge seekers"],
+        # Sports & Outdoors
+        10: ["serious athletes", "outdoor enthusiasts", "fitness fanatics", "weekend warriors", "adventure seekers"],
+        # Beauty & Personal Care
+        11: ["beauty enthusiasts", "skincare aficionados", "self-care devotees", "wellness-focused individuals", "beauty professionals"],
+        # Furniture & Decor
+        12: ["home design enthusiasts", "urban dwellers", "professional decorators", "new homeowners", "comfort seekers"],
+        # Toys & Games
+        13: ["developing minds", "creative children", "family game nights", "educational play", "STEM learning"],
+        # Pet Supplies
+        14: ["devoted pet parents", "animal lovers", "multiple pet households", "active pet owners", "pet health advocates"]
+    }
+    
+    # Materials by category
+    materials = {
+        1: ["premium components", "aerospace-grade materials", "advanced composites", "precision-engineered elements", "high-grade electronics"],
+        2: ["premium-grade components", "aerospace alloys", "precision-engineered elements", "impact-resistant materials", "high-grade glass"],
+        3: ["premium-grade aluminum", "carbon fiber components", "high-density polymers", "military-grade materials", "premium-engineered alloys"],
+        4: ["custom-designed acoustic materials", "premium-grade components", "precision-engineered drivers", "advanced composites", "acoustically-optimized materials"],
+        5: ["premium natural fibers", "sustainably-sourced fabrics", "performance-grade textiles", "eco-friendly materials", "high-tech performance fabrics"],
+        6: ["premium cotton blends", "performance-grade fabrics", "sustainable textiles", "technical performance materials", "luxury natural fibers"],
+        7: ["premium sustainable fabrics", "high-performance blends", "luxury natural fibers", "technical textiles", "eco-conscious materials"],
+        8: ["premium-grade stainless steel", "commercial-grade components", "high-performance ceramics", "precision-engineered elements", "professional-grade materials"],
+        9: ["sustainably-sourced paper", "premium binding materials", "archival-quality components", "high-definition printing", "eco-friendly production"],
+        10: ["aerospace-grade aluminum", "performance composites", "technical performance fabrics", "high-density foams", "carbon fiber components"],
+        11: ["pharmaceutical-grade ingredients", "botanical extracts", "clinical-strength actives", "dermatologist-formulated compounds", "natural botanical complexes"],
+        12: ["sustainably-harvested hardwoods", "premium upholstery materials", "high-resilience foams", "aircraft-grade aluminum", "ethically-sourced natural materials"],
+        13: ["non-toxic premium plastics", "sustainable wood", "high-quality paper stock", "child-safe materials", "durable composites"],
+        14: ["pet-safe premium materials", "orthopedic-grade foams", "durable natural fibers", "veterinarian-approved compounds", "high-performance fabrics"]
+    }
+    
+    # Quality descriptors
+    qualities = ["exceptional precision", "uncompromising standards", "meticulous attention to detail", "rigorous quality control", "artisanal care", "exacting specifications", "stringent quality testing", "professional-grade standards", "flawless execution", "superior craftsmanship"]
+    
+    # Performance descriptors
+    performances = ["unparalleled performance", "exceptional results", "outstanding efficiency", "superior functionality", "remarkable effectiveness", "industry-leading capabilities", "benchmark-setting performance", "best-in-class operation", "flawless execution", "transformative results"]
+    
+    # Use cases by category
+    use_cases = {
+        1: ["at home", "in the office", "while traveling", "during creative projects", "for entertainment", "managing your smart home", "working remotely", "gaming"],
+        2: ["capturing life's moments", "staying connected", "managing your digital life", "creating content", "gaming on the go", "multitasking", "video conferencing", "social networking"],
+        3: ["handling demanding workloads", "creating digital content", "managing business operations", "attending virtual meetings", "gaming", "streaming media", "analyzing complex data", "studying"],
+        4: ["enjoying music", "during workouts", "commuting", "in noisy environments", "taking calls", "watching movies", "gaming", "recording content"],
+        5: ["attending special occasions", "during daily activities", "at work", "while traveling", "during seasonal transitions", "for casual outings", "at formal events", "weekend getaways"],
+        6: ["at the office", "during business meetings", "for casual weekends", "at special events", "while traveling", "during outdoor activities", "for evening occasions", "day-to-day wear"],
+        7: ["at professional settings", "during social gatherings", "for casual outings", "at formal events", "while traveling", "during seasonal transitions", "for weekend activities", "day-to-night transitions"],
+        8: ["preparing family meals", "entertaining guests", "creating gourmet dishes", "batch cooking", "preparing quick meals", "experimenting with new recipes", "baking", "meal prepping"],
+        9: ["studying", "researching", "developing professional skills", "personal growth", "reference", "teaching", "learning new concepts", "staying current in your field"],
+        10: ["training", "competing", "weekend adventures", "daily workouts", "outdoor expeditions", "improving techniques", "team activities", "personal challenges"],
+        11: ["daily skincare routines", "special treatment sessions", "professional beauty services", "travel skincare", "addressing specific concerns", "maintaining healthy skin", "anti-aging regimens", "deep cleansing rituals"],
+        12: ["everyday living", "entertaining guests", "working from home", "relaxing", "organizing your space", "small space living", "family gatherings", "creating functional spaces"],
+        13: ["educational play", "family game nights", "independent exploration", "skill development", "creative expression", "collaborative play", "outdoor adventures", "indoor activities"],
+        14: ["daily pet care", "traveling with pets", "training sessions", "addressing health needs", "playtime", "grooming routines", "comfort and rest", "special needs care"]
+    }
+    
+    # Warranty and support options
+    warranties = ["comprehensive warranty coverage", "extended service protection", "lifetime technical support", "satisfaction guarantee", "worry-free warranty", "no-questions-asked return policy", "long-term service commitment", "product protection plan"]
+    
+    supports = ["24/7 customer support", "dedicated service teams", "online knowledge base", "expert technical assistance", "personalized setup help", "video tutorials", "community forums", "priority customer care"]
+    
+    # Generate products for each category
+    all_products = []
+    
+    for category_id, count in category_product_counts.items():
+        category_name = category_map.get(category_id, "Unknown")
+        template = product_templates.get(category_id, product_templates[1])  # Default to electronics if category not found
+        
+        for i in range(count):
+            # Generate product details
+            brand = random.choice(template["brands"])
+            prefix = random.choice(template["prefixes"])
+            product_type = random.choice(template["products"])
+            product_name = f"{product_type}"
+            
+            # Generate price in the category's range
+            base_price = random.uniform(template["price_range"][0], template["price_range"][1])
+            price = round(base_price, 2)
+            
+            # Determine if on sale (30% chance)
+            on_sale = random.random() < 0.3
+            sale_price = round(price * 0.85, 2) if on_sale else None
+            
+            # Calculate cost (usually 40-60% of retail price)
+            cost_percentage = random.uniform(0.4, 0.6)
+            cost = round(price * cost_percentage, 2)
+            
+            # Generate stock quantity (more for lower-priced items)
+            stock_quantity = random.randint(10, 200)
+            if price > 500:
+                stock_quantity = random.randint(5, 50)
+            
+            # Generate SKU
+            sku = f"{brand[:3].upper()}-{product_type[:3].upper()}-{random.randint(100, 999)}"
+            
+            # Generate weight and dimensions appropriate for the product type
+            if product_type in ["Laptop", "Computer", "Tablet"]:
+                weight = round(random.uniform(0.8, 3.5), 2)
+                dimensions = json.dumps({
+                    "length": round(random.uniform(9, 15), 2),
+                    "width": round(random.uniform(6, 12), 2),
+                    "height": round(random.uniform(0.3, 1.2), 2)
+                })
+            elif product_type in ["Smartphone", "Earbuds", "Watch"]:
+                weight = round(random.uniform(0.1, 0.5), 2)
+                dimensions = json.dumps({
+                    "length": round(random.uniform(2, 6), 2),
+                    "width": round(random.uniform(1, 3), 2),
+                    "height": round(random.uniform(0.2, 0.8), 2)
+                })
+            elif "Clothing" in category_name or "Men's" in category_name or "Women's" in category_name:
+                weight = round(random.uniform(0.2, 1.0), 2)
+                dimensions = json.dumps({
+                    "length": round(random.uniform(10, 30), 2),
+                    "width": round(random.uniform(8, 20), 2),
+                    "height": round(random.uniform(0.5, 3), 2)
+                })
+            else:
+                weight = round(random.uniform(0.5, 15.0), 2)
+                dimensions = json.dumps({
+                    "length": round(random.uniform(5, 24), 2),
+                    "width": round(random.uniform(5, 18), 2),
+                    "height": round(random.uniform(2, 12), 2)
+                })
+            
+            # Determine if featured (10% chance)
+            is_featured = 1 if random.random() < 0.1 else 0
+            
+            # Generate product description using templates
+            # Select random features
+            features = random.sample(template["features"], 4)
+            feature1, feature2, feature3, feature4 = features
+            
+            highlight_feature = random.choice([
+                "advanced technology", "proprietary system", "innovative design", 
+                "next-generation architecture", "exclusive feature", "cutting-edge component",
+                "revolutionary approach", "state-of-the-art mechanism", "patented solution"
+            ])
+            
+            secondary_feature = random.choice([
+                "intuitive interface", "smart connectivity", "premium construction", 
+                "thoughtful design", "intelligent system", "adaptive algorithm",
+                "precision engineering", "ergonomic layout", "responsive controls"
+            ])
+            
+            benefit = random.choice([
+                "exceptional performance", "unparalleled convenience", "remarkable efficiency", 
+                "outstanding results", "superior reliability", "incredible versatility",
+                "enhanced productivity", "ultimate comfort", "seamless operation"
+            ])
+            
+            secondary_benefit = random.choice([
+                "long-term durability", "intuitive operation", "effortless integration", 
+                "consistent results", "simplified workflow", "reduced maintenance",
+                "enhanced safety", "increased efficiency", "maximum flexibility"
+            ])
+            
+            # Select description template and fill it out
+            desc_template = random.choice(description_templates)
+            user_type = random.choice(user_types.get(category_id, user_types[1]))
+            material = random.choice(materials.get(category_id, materials[1]))
+            quality = random.choice(qualities)
+            performance = random.choice(performances)
+            use_case_options = use_cases.get(category_id, use_cases[1])
+            use_case1, use_case2 = random.sample(use_case_options, 2)
+            warranty = random.choice(warranties)
+            support = random.choice(supports)
+            
+            description = desc_template.format(
+                prefix=prefix,
+                product_name=product_name,
+                category=category_name,
+                feature1=feature1,
+                feature2=feature2,
+                feature3=feature3,
+                user_type=user_type,
+                highlight_feature=highlight_feature,
+                benefit=benefit,
+                secondary_feature=secondary_feature,
+                secondary_benefit=secondary_benefit,
+                material=material,
+                quality=quality,
+                product_type=product_type.lower(),
+                performance=performance,
+                use_case1=use_case1,
+                use_case2=use_case2,
+                warranty=warranty,
+                support=support,
+                brand=brand
+            )
+            
+            # Generate short description
+            short_description = f"{prefix} {product_type.lower()} with {feature1.lower()}."
+            
+            # Add to products list
+            all_products.append((
+                None, f"{prefix} {product_name}", sku, description, short_description,
+                price, sale_price, cost, stock_quantity, category_id, brand, weight,
+                dimensions, is_featured, 1  # is_active is always 1
+            ))
+    
+    # Insert all generated products
     cursor.executemany('''
     INSERT INTO products (
         id, name, sku, description, short_description, price, sale_price, cost, 
         stock_quantity, category_id, brand, weight, dimensions, is_featured, is_active
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', products)
+    ''', all_products)
     
     # Fetch the newly inserted product IDs
     cursor.execute("SELECT id FROM products WHERE id >= ?", (start_id,))
     new_product_ids = [row[0] for row in cursor.fetchall()]
     
+    print(f"Successfully generated and inserted {len(new_product_ids)} new products")
+    
     # Create product attributes based on categories
     attributes_to_insert = []
     
     # Define attribute templates by category
-    electronics_attributes = [
-        ("Color", ["Black", "Silver", "White", "Blue", "Gold"], 1, 1, 1),
-        ("Warranty", ["1 Year", "2 Years", "3 Years"], 2, 1, 1),
-        ("Connectivity", ["Bluetooth 5.0", "Wi-Fi 6", "USB-C", "USB-A", "HDMI"], 3, 1, 1)
-    ]
+    attribute_templates = {
+        # Electronics
+        1: [
+            ("Color", ["Black", "Silver", "White", "Space Gray", "Midnight Blue", "Rose Gold", "Graphite"], 1, 1, 1),
+            ("Warranty", ["1 Year", "2 Years", "3 Years", "5 Years", "Limited Lifetime"], 2, 1, 1),
+            ("Connectivity", ["Bluetooth 5.2", "Wi-Fi 6E", "USB-C", "Thunderbolt 4", "HDMI 2.1", "5G"], 3, 1, 1),
+            ("Power", ["Battery Powered", "Rechargeable", "USB Powered", "AC Adapter", "Wireless Charging"], 4, 1, 1)
+        ],
+        # Smartphones
+        2: [
+            ("Color", ["Midnight Black", "Stellar Silver", "Arctic Blue", "Sunset Gold", "Cosmic Gray", "Pearl White"], 1, 1, 1),
+            ("Storage", ["64GB", "128GB", "256GB", "512GB", "1TB"], 2, 1, 1),
+            ("Display", ["AMOLED", "Super Retina XDR", "Dynamic AMOLED", "Liquid Retina", "ProMotion"], 3, 1, 1),
+            ("Camera", ["12MP Wide", "48MP Quad", "108MP Ultra", "Triple Lens System", "Periscope Zoom"], 4, 1, 1)
+        ],
+        # Laptops
+        3: [
+            ("Processor", ["Intel Core i7", "AMD Ryzen 9", "Apple M2", "Intel Core i9", "AMD Ryzen 7"], 1, 1, 1),
+            ("Memory", ["8GB", "16GB", "32GB", "64GB"], 2, 1, 1),
+            ("Storage", ["512GB SSD", "1TB SSD", "2TB SSD", "4TB SSD", "512GB + 2TB HDD"], 3, 1, 1),
+            ("Display", ["13.3-inch Retina", "15.6-inch 4K", "17-inch UHD", "14-inch QHD", "16-inch XDR"], 4, 1, 1)
+        ],
+        # Audio
+        4: [
+            ("Type", ["Over-ear", "In-ear", "On-ear", "True Wireless", "Bone Conduction", "Open-back"], 1, 1, 1),
+            ("Noise Cancellation", ["Active Noise Cancelling", "Passive Isolation", "Transparency Mode", "Adaptive ANC", "None"], 2, 1, 1),
+            ("Battery Life", ["Up to 8 hours", "Up to 20 hours", "Up to 30 hours", "Up to 40 hours", "Up to 60 hours"], 3, 1, 1),
+            ("Water Resistance", ["IPX4", "IPX5", "IPX7", "IP68", "Not water resistant"], 4, 1, 1)
+        ],
+        # Clothing
+        5: [
+            ("Material", ["Cotton", "Polyester", "Wool", "Cashmere", "Silk", "Linen", "Nylon", "Blend"], 1, 1, 1),
+            ("Fit", ["Regular", "Slim", "Relaxed", "Athletic", "Oversized", "Tailored"], 2, 1, 1),
+            ("Season", ["All-season", "Summer", "Winter", "Spring/Fall", "Resort"], 3, 1, 1),
+            ("Care", ["Machine Wash", "Hand Wash", "Dry Clean Only", "Spot Clean", "Machine Wash Cold"], 4, 0, 1)
+        ],
+        # Men's
+        6: [
+            ("Material", ["100% Cotton", "Cotton Blend", "Merino Wool", "Performance Polyester", "Linen Blend", "Technical Fabric"], 1, 1, 1),
+            ("Fit", ["Classic", "Slim", "Modern", "Athletic", "Regular", "Tailored"], 2, 1, 1),
+            ("Occasion", ["Casual", "Business", "Formal", "Athletic", "Outdoor", "Everyday"], 3, 1, 1),
+            ("Care", ["Machine Wash", "Hand Wash", "Dry Clean Only", "Tumble Dry Low", "Air Dry"], 4, 0, 1)
+        ],
+        # Women's
+        7: [
+            ("Material", ["Premium Cotton", "Silk Blend", "Cashmere Blend", "Sustainable Viscose", "Organic Cotton", "Technical Fabric"], 1, 1, 1),
+            ("Fit", ["Relaxed", "Slim", "Classic", "Boyfriend", "Fitted", "Oversized"], 2, 1, 1),
+            ("Style", ["Contemporary", "Classic", "Bohemian", "Minimalist", "Elegant", "Casual"], 3, 1, 1),
+            ("Care", ["Machine Wash Cold", "Hand Wash", "Dry Clean Only", "Gentle Cycle", "Lay Flat to Dry"], 4, 0, 1)
+        ],
+        # Home & Kitchen
+        8: [
+            ("Material", ["Stainless Steel", "Cast Iron", "Ceramic", "Glass", "BPA-free Plastic", "Tempered Glass", "Aluminum"], 1, 1, 1),
+            ("Capacity", ["Small", "Medium", "Large", "Extra Large", "Family Size", "Compact"], 2, 1, 1),
+            ("Features", ["Programmable", "Timer", "Digital Display", "Quick Heat", "Energy Efficient", "Smart Enabled"], 3, 1, 1),
+            ("Care", ["Dishwasher Safe", "Hand Wash Only", "Wipe Clean", "Self-Cleaning", "Easy Clean"], 4, 0, 1)
+        ],
+        # Books
+        9: [
+            ("Format", ["Hardcover", "Paperback", "e-Book", "Audiobook", "Spiral-bound", "Box Set"], 1, 1, 1),
+            ("Pages", ["Under 200", "200-400", "400-600", "600-800", "Over 800"], 2, 0, 1),
+            ("Level", ["Beginner", "Intermediate", "Advanced", "Professional", "All Levels"], 3, 1, 1),
+            ("Language", ["English", "Spanish", "French", "German", "Chinese", "Japanese"], 4, 1, 1)
+        ],
+        # Sports & Outdoors
+        10: [
+            ("Material", ["Aluminum", "Carbon Fiber", "High-impact Plastic", "Nylon", "Synthetic", "Waterproof Fabric"], 1, 1, 1),
+            ("Size", ["Small", "Medium", "Large", "X-Large", "Adjustable", "One Size"], 2, 1, 1),
+            ("Activity", ["Running", "Hiking", "Cycling", "Swimming", "Camping", "Fitness", "Team Sports"], 3, 1, 1),
+            ("Weather Rating", ["All-Weather", "3-Season", "Water-Resistant", "Waterproof", "UV Protection"], 4, 1, 1)
+        ],
+        # Beauty & Personal Care
+        11: [
+            ("Skin Type", ["All Skin Types", "Sensitive", "Dry", "Oily", "Combination", "Mature"], 1, 1, 1),
+            ("Concerns", ["Anti-Aging", "Brightening", "Hydration", "Acne", "Redness", "Texture"], 2, 1, 1),
+            ("Formulation", ["Cream", "Serum", "Gel", "Oil", "Lotion", "Powder", "Mousse"], 3, 1, 1),
+            ("Free From", ["Parabens", "Sulfates", "Silicones", "Fragrance", "Dyes", "Phthalates"], 4, 0, 1)
+        ],
+        # Furniture & Decor
+        12: [
+            ("Material", ["Solid Wood", "Engineered Wood", "Metal", "Glass", "Upholstered", "Leather", "Fabric"], 1, 1, 1),
+            ("Style", ["Modern", "Traditional", "Contemporary", "Industrial", "Mid-Century", "Rustic"], 2, 1, 1),
+            ("Assembly", ["Ready Assembled", "Partial Assembly", "Full Assembly Required", "No Assembly"], 3, 0, 1),
+            ("Room", ["Living Room", "Bedroom", "Dining Room", "Home Office", "Kitchen", "Outdoor"], 4, 1, 1)
+        ],
+        # Toys & Games
+        13: [
+            ("Age Range", ["3-5 years", "6-8 years", "9-12 years", "13+ years", "Adult", "All Ages"], 1, 1, 1),
+            ("Type", ["Educational", "Building", "Strategy", "Cooperative", "Creative", "Active Play"], 2, 1, 1),
+            ("Players", ["1 player", "2 players", "2-4 players", "4-6 players", "6+ players", "Team play"], 3, 1, 1),
+            ("Duration", ["Under 30 minutes", "30-60 minutes", "1-2 hours", "2+ hours", "Varies"], 4, 0, 1)
+        ],
+        # Pet Supplies
+        14: [
+            ("Pet Type", ["Dogs", "Cats", "Small Pets", "Birds", "Fish", "Reptiles", "All Pets"], 1, 1, 1),
+            ("Size", ["X-Small", "Small", "Medium", "Large", "X-Large", "Adjustable"], 2, 1, 1),
+            ("Life Stage", ["Puppy/Kitten", "Adult", "Senior", "All Ages"], 3, 1, 1),
+            ("Features", ["Washable", "Waterproof", "Chew-Resistant", "Portable", "Interactive", "Adjustable"], 4, 1, 1)
+        ]
+    }
     
-    clothing_attributes = [
-        ("Material", ["Cotton", "Polyester", "Wool", "Nylon", "Cashmere Blend", "Gore-Tex"], 1, 1, 1),
-        ("Care", ["Machine Wash", "Hand Wash", "Dry Clean Only"], 2, 0, 1),
-        ("Fit", ["Regular", "Slim", "Relaxed", "Athletic", "Oversized"], 3, 1, 1)
-    ]
-    
-    home_kitchen_attributes = [
-        ("Material", ["Stainless Steel", "Glass", "Ceramic", "Plastic", "Wood", "Cast Iron"], 1, 1, 1),
-        ("Dimensions", ["Small", "Medium", "Large", "Extra Large"], 2, 1, 1),
-        ("Care", ["Dishwasher Safe", "Hand Wash Only", "Wipe Clean"], 3, 0, 1)
-    ]
-    
-    # Create product attributes based on product category
+    # Create attributes for all products
     for product_id in new_product_ids:
         # Get the category for this product
         cursor.execute("SELECT category_id FROM products WHERE id = ?", (product_id,))
         category_id = cursor.fetchone()[0]
         
         # Select appropriate attributes based on category
-        if category_id in [1, 2, 3, 4]:  # Electronics categories
-            attribute_template = electronics_attributes
-        elif category_id in [5, 6, 7]:  # Clothing categories
-            attribute_template = clothing_attributes
-        elif category_id in [8]:  # Home & Kitchen
-            attribute_template = home_kitchen_attributes
-        else:
-            # For other categories, use generic attributes
-            continue
+        attribute_template = attribute_templates.get(category_id, attribute_templates[1])  # Default to electronics
         
         # Create attributes for this product
         for attr_name, attr_values, display_order, is_filterable, is_visible in attribute_template:
@@ -281,6 +693,7 @@ def insert_additional_products(conn, start_id):
     )
     VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', attributes_to_insert)
+    print(f"Created {len(attributes_to_insert)} product attributes")
     
     # Insert product images (at least one per product)
     product_images = []
@@ -292,10 +705,12 @@ def insert_additional_products(conn, start_id):
         # Create primary image
         product_images.append((None, product_id, f"product_{product_id}_main.jpg", 1, 1, f"{product_name} main view"))
         
-        # Add 1-3 additional images randomly
-        num_additional = random.randint(1, 3)
-        for i in range(num_additional):
-            angle = random.choice(["front", "side", "back", "detail", "lifestyle", "packaging"])
+        # Add 2-4 additional images
+        num_additional = random.randint(2, 4)
+        angles = ["front", "side", "back", "detail", "lifestyle", "packaging", "action", "closeup", "top", "interior"]
+        selected_angles = random.sample(angles, min(num_additional, len(angles)))
+        
+        for i, angle in enumerate(selected_angles):
             product_images.append(
                 (None, product_id, f"product_{product_id}_{angle}.jpg", 0, i+2, f"{product_name} {angle} view")
             )
@@ -306,6 +721,7 @@ def insert_additional_products(conn, start_id):
     )
     VALUES (?, ?, ?, ?, ?, ?)
     ''', product_images)
+    print(f"Created {len(product_images)} product images")
     
     # Add tags to products
     product_tags = []
@@ -317,7 +733,7 @@ def insert_additional_products(conn, start_id):
     # Assign 2-4 random tags to each product
     for product_id in new_product_ids:
         num_tags = random.randint(2, 4)
-        selected_tags = random.sample(all_tag_ids, num_tags)
+        selected_tags = random.sample(all_tag_ids, min(num_tags, len(all_tag_ids)))
         for tag_id in selected_tags:
             product_tags.append((product_id, tag_id))
     
@@ -325,35 +741,63 @@ def insert_additional_products(conn, start_id):
     INSERT INTO product_tags (product_id, tag_id)
     VALUES (?, ?)
     ''', product_tags)
+    print(f"Created {len(product_tags)} product tag associations")
     
-    # Add variants for a subset of products
+    # Create product variants for appropriate categories (primarily clothing, electronics)
     variants_to_insert = []
     
-    # Select 10 random products to create variants for
-    variant_product_ids = random.sample(new_product_ids, 10)
+    # Categories that commonly have variants
+    variant_categories = [1, 2, 3, 4, 6, 7]
+    
+    # Select products in variant-appropriate categories (about 40% of them)
+    cursor.execute("""
+        SELECT id, name, sku, category_id FROM products 
+        WHERE id >= ? AND category_id IN (1, 2, 3, 4, 6, 7)
+    """, (start_id,))
+    variant_candidates = cursor.fetchall()
+    variant_product_count = int(len(variant_candidates) * 0.4)
+    variant_product_ids = random.sample([row[0] for row in variant_candidates], min(variant_product_count, len(variant_candidates)))
     
     for product_id in variant_product_ids:
-        # Get product SKU as base
+        # Find the product info
         cursor.execute("SELECT sku, name, category_id FROM products WHERE id = ?", (product_id,))
-        result = cursor.fetchone()
-        base_sku, product_name, category_id = result
+        base_sku, product_name, category_id = cursor.fetchone()
         
-        # Different variant types based on category
         if category_id in [1, 2, 3, 4]:  # Electronics
             # Create storage or color variants
             variant_types = random.choice([
-                ("Color", ["Black", "Silver", "White", "Blue", "Red"]),
-                ("Storage", ["64GB", "128GB", "256GB", "512GB", "1TB"])
+                ("Color", ["Black", "Silver", "White", "Blue", "Red", "Gold", "Green", "Purple"]),
+                ("Storage", ["64GB", "128GB", "256GB", "512GB", "1TB", "2TB"]),
+                ("Memory", ["4GB", "8GB", "16GB", "32GB", "64GB"])
             ])
             attr_name, attr_values = variant_types
             
-            for value in attr_values[:3]:  # Limit to 3 variants per product
-                variant_sku = f"{base_sku}-{value.replace(' ', '')}"
+            # Select a subset of values
+            num_variants = random.randint(2, min(5, len(attr_values)))
+            selected_values = random.sample(attr_values, num_variants)
+            
+            for value in selected_values:
+                # Variants with higher storage/memory cost more
+                price_adj = 0
+                if attr_name == "Storage" and "GB" in value:
+                    # Extract numeric value and calculate price increase
+                    try:
+                        gb_value = int(value.replace("GB", "").replace("TB", "000"))
+                        price_adj = (gb_value // 64) * 50  # $50 more per 64GB
+                    except:
+                        price_adj = random.choice([0, 50, 100, 150])
+                elif attr_name == "Memory" and "GB" in value:
+                    try:
+                        gb_value = int(value.replace("GB", ""))
+                        price_adj = (gb_value // 4) * 75  # $75 more per 4GB of RAM
+                    except:
+                        price_adj = random.choice([0, 75, 150, 225])
+                
+                variant_sku = f"{base_sku}-{value.replace(' ', '').replace('GB', '').replace('TB', 'T')}"
                 variant_name = f"{product_name} {value}"
-                price_adj = random.choice([0, 50, 100, 150]) if attr_name == "Storage" else 0
                 stock = random.randint(10, 50)
                 attr_json = json.dumps({attr_name.lower(): value})
-                image_url = f"product_{product_id}_{value.lower().replace(' ', '')}.jpg"
+                image_url = f"product_{product_id}_{value.lower().replace(' ', '').replace('gb', '').replace('tb', 't')}.jpg"
                 
                 variants_to_insert.append(
                     (None, product_id, variant_sku, variant_name, price_adj, stock, attr_json, image_url, 1)
@@ -361,17 +805,26 @@ def insert_additional_products(conn, start_id):
                 
         elif category_id in [5, 6, 7]:  # Clothing
             # Create size and color variants
-            sizes = ["S", "M", "L", "XL"]
-            colors = ["Black", "Navy", "Gray", "White", "Burgundy"]
+            sizes = ["XS", "S", "M", "L", "XL", "XXL"]
+            colors = ["Black", "Navy", "Gray", "White", "Burgundy", "Olive", "Blue", "Red", "Charcoal", "Brown", "Beige"]
             
-            # Pick 2-3 colors
-            selected_colors = random.sample(colors, random.randint(2, 3))
+            # Pick a subset of sizes and colors
+            size_count = random.randint(4, min(len(sizes), 6))
+            color_count = random.randint(3, min(len(colors), 6))
             
-            for size in sizes:
+            selected_sizes = random.sample(sizes, size_count)
+            selected_colors = random.sample(colors, color_count)
+            
+            for size in selected_sizes:
                 for color in selected_colors:
                     variant_sku = f"{base_sku}-{color[:3].upper()}-{size}"
                     variant_name = f"{product_name} {color} {size}"
-                    price_adj = 0  # Same price for all sizes/colors
+                    
+                    # Larger sizes might cost slightly more
+                    price_adj = 0
+                    if size in ["XL", "XXL"]:
+                        price_adj = random.choice([0, 5, 10])
+                    
                     stock = random.randint(5, 30)
                     attr_json = json.dumps({"size": size, "color": color})
                     image_url = f"product_{product_id}_{color.lower()}_{size.lower()}.jpg"
@@ -388,7 +841,8 @@ def insert_additional_products(conn, start_id):
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', variants_to_insert)
     
-    print(f"Successfully inserted 25 new products with attributes, images, tags, and variants.")
+    print(f"Created {len(variants_to_insert)} product variants")
+    print(f"Successfully inserted {len(new_product_ids)} new products with complete details")
 
 if __name__ == "__main__":
     add_more_products()
